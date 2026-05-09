@@ -37,13 +37,13 @@ public class DashboardService {
 
     private EventChartDTO buildEventChart(Long cropId) {
 
-        Instant start = Instant.now().minus(Duration.ofDays(7));
+        Instant start = Instant.now().minus(Duration.ofDays(30));
 
         List<Object[]> results = eventRepository.countEventsByDay(start, cropId);
 
         Map<String, Long> map = new LinkedHashMap<>();
 
-        for (int i = 6; i >= 0; i--) {
+        for (int i = 29; i >= 0; i--) {
             String date = LocalDate.now().minusDays(i).toString();
             map.put(date, 0L);
         }
