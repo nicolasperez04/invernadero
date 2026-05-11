@@ -49,15 +49,64 @@ jobs:
           path: target/SIGMA-*.jar
           retention-days: 7
 
-      - name: Generate Test Summary
+      - name: Get Build Time
+        id: build-time
+        run: echo "BUILD_TIME=$(($(date +%s) - START_TIME))" >> $GITHUB_OUTPUT
+        env:
+          START_TIME: ${{ steps.time.outputs.START_TIME }}
+
+      - name: Generate Test Report
+        id: test-report
         run: |
-          echo "## Build Results" >> $GITHUB_STEP_SUMMARY
+          TESTS_TOTAL=$(grep -r "Tests run:" target/surefire-reports/*.txt 2>/dev/null | sed -E 's/.*Tests run: ([0-9]+).*/\1/' | awk '{sum+=$1} END {print sum}')
+          TESTS_TOTAL=${TESTS_TOTAL:-0}
+
+          TESTS_FAILURES=$(grep -r "Failures:" target/surefire-reports/*.txt 2>/dev/null | sed -E 's/.*Failures: ([0-9]+).*/\1/' | awk '{sum+=$1} END {print sum}')
+          TESTS_FAILURES=${TESTS_FAILURES:-0}
+
+          TESTS_ERRORS=$(grep -r "Errors:" target/surefire-reports/*.txt 2>/dev/null | sed -E 's/.*Errors: ([0-9]+).*/\1/' | awk '{sum+=$1} END {print sum}')
+          TESTS_ERRORS=${TESTS_ERRORS:-0}
+
+          TESTS_SKIPPED=$(grep -r "Skipped:" target/surefire-reports/*.txt 2>/dev/null | sed -E 's/.*Skipped: ([0-9]+).*/\1/' | awk '{sum+=$1} END {print sum}')
+          TESTS_SKIPPED=${TESTS_SKIPPED:-0}
+
+          TESTS_PASSED=$((TESTS_TOTAL - TESTS_FAILURES - TESTS_ERRORS - TESTS_SKIPPED))
+
+          echo "TESTS_TOTAL=$TESTS_TOTAL" >> $GITHUB_OUTPUT
+          echo "TESTS_PASSED=$TESTS_PASSED" >> $GITHUB_OUTPUT
+          echo "TESTS_FAILURES=$TESTS_FAILURES" >> $GITHUB_OUTPUT
+          echo "TESTS_ERRORS=$TESTS_ERRORS" >> $GITHUB_OUTPUT
+          echo "TESTS_SKIPPED=$TESTS_SKIPPED" >> $GITHUB_OUTPUT
+
+      - name: Generate CI Summary
+        run: |
+          BUILD_TIME="${{ steps.build-time.outputs.BUILD_TIME }}"
+          BUILD_STATUS="✅ Success"
+
+          if [ "$BUILD_TIME" -ge 60 ]; then
+            BUILD_TIME_STR="$((BUILD_TIME / 60))m $((BUILD_TIME % 60))s"
+          else
+            BUILD_TIME_STR="${BUILD_TIME}s"
+          fi
+
+          echo "## CI Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Compile | :white_check_mark: Success |" >> $GITHUB_STEP_SUMMARY
-          echo "| Test | :white_check_mark: Success |" >> $GITHUB_STEP_SUMMARY
-          echo "| Package | :white_check_mark: Success |" >> $GITHUB_STEP_SUMMARY
+          echo "### Build" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | $BUILD_STATUS |" >> $GITHUB_STEP_SUMMARY
+          echo "| Duration | $BUILD_TIME_STR |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Tests" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Total | ${{ steps.test-report.outputs.TESTS_TOTAL }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Passed | ✅ ${{ steps.test-report.outputs.TESTS_PASSED }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Failed | ❌ ${{ steps.test-report.outputs.TESTS_FAILURES }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Errors | ⚠️ ${{ steps.test-report.outputs.TESTS_ERRORS }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Skipped | ⏭️ ${{ steps.test-report.outputs.TESTS_SKIPPED }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "- \`sigma-jar\` available for 7 days" >> $GITHUB_STEP_SUMMARY
+          echo "- \`sigma-jar\` (92 MB) - disponible 7 días" >> $GITHUB_STEP_SUMMARY
+        env:
+          BUILD_TIME: ${{ steps.build-time.outputs.BUILD_TIME }}
