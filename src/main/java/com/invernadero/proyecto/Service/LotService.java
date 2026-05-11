@@ -21,6 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Servicio para la gestión de lotes de cultivo.
+ * Maneja operaciones CRUD y cálculos de métricas agrícolas como progreso,
+ * duración, frecuencia de eventos y estados de inactividad.
+ */
 @Service
 @RequiredArgsConstructor
 public class LotService {
@@ -29,8 +34,13 @@ public class LotService {
     private final CropRepository cropRepository;
     private final EventRepository eventRepository;
 
-
-
+    /**
+     * Crea un nuevo lote asociado a un cultivo existente.
+     *
+     * @param request datos del lote a crear (nombre, cultivo, fechas de inicio/fin)
+     * @return los datos del lote creado
+     * @throws RuntimeException si no existe un cultivo con el ID especificado
+     */
     public LotResponse createLot(LotRequest request) {
 
         Crop crop = cropRepository.findById(request.getCropId())
@@ -46,12 +56,24 @@ public class LotService {
         return LotMapper.toDTO(lotRepository.save(lot));
     }
 
+    /**
+     * Obtiene un lote por su identificador.
+     *
+     * @param id identificador único del lote
+     * @return los datos del lote encontrado
+     * @throws RuntimeException si no se encuentra un lote con el ID especificado
+     */
     public LotResponse getLotById(Long id) {
         return lotRepository.findById(id)
                 .map(LotMapper::toDTO)
                 .orElseThrow(() -> new RuntimeException("Lot not found"));
     }
 
+    /**
+     * Obtiene todos los lotes registrados en el sistema.
+     *
+     * @return lista de todos los lotes
+     */
     public List<LotResponse> getAllLots() {
         return lotRepository.findAll()
                 .stream()
@@ -59,6 +81,12 @@ public class LotService {
                 .toList();
     }
 
+    /**
+     * Obtiene todos los lotes asociados a un cultivo específico.
+     *
+     * @param cropId identificador del cultivo
+     * @return lista de lotes del cultivo especificado
+     */
     public List<LotResponse> getLotsByCrop(Long cropId) {
         return lotRepository.findByCropId(cropId)
                 .stream()
@@ -66,6 +94,15 @@ public class LotService {
                 .toList();
     }
 
+    /**
+     * Actualiza los datos de un lote existente.
+     * Solo actualiza los campos proporcionados que no sean nulos.
+     *
+     * @param id      identificador del lote a actualizar
+     * @param request datos a actualizar (nombre, fechas de inicio/fin)
+     * @return los datos del lote actualizado
+     * @throws RuntimeException si no se encuentra un lote con el ID especificado
+     */
     public LotResponse updateLot(Long id, LotRequest request) {
 
         Lot lot = lotRepository.findById(id)
@@ -86,13 +123,22 @@ public class LotService {
         return LotMapper.toDTO(lotRepository.save(lot));
     }
 
-
+    /**
+     * Elimina un lote por su identificador.
+     *
+     * @param id identificador del lote a eliminar
+     */
     public void deleteLot(Long id) {
         lotRepository.deleteById(id);
     }
 
-
-
+    /**
+     * Determina el estado actual de un lote basado en sus eventos.
+     *
+     * @param lotId identificador del lote
+     * @return estado del lote: CREATED (sin siembra), IN_PRODUCTION (siembra sin cosecha),
+     *         o FINISHED (ya cosechado)
+     */
     public String getLotStatus(Long lotId) {
 
         boolean hasSowing = eventRepository.existsByLotIdAndTypeName(lotId, "SOWING");
@@ -104,12 +150,25 @@ public class LotService {
         return "IN_PRODUCTION";
     }
 
-
-
+    /**
+     * Cuenta el número total de eventos registrados en un lote.
+     *
+     * @param lotId identificador del lote
+     * @return cantidad de eventos del lote
+     */
     public long countEvents(Long lotId) {
         return eventRepository.findByLotId(lotId).size();
     }
 
+    /**
+     * Calcula la duración en días de un lote.
+     * Mide desde la fecha de siembra hasta la cosecha, o hasta el momento actual
+     * si aún no se ha cosechado.
+     *
+     * @param lotId identificador del lote
+     * @return número de días transcurridos entre siembra y cosecha
+     *         (o hasta ahora si no hay cosecha)
+     */
     public long calculateDurationInDays(Long lotId) {
 
         List<Event> events = eventRepository.findByLotIdOrderByTimestampAsc(lotId);
@@ -137,7 +196,12 @@ public class LotService {
         return Duration.between(sowingDate, harvestDate).toDays();
     }
 
-
+    /**
+     * Calcula la frecuencia promedio de eventos por día en un lote.
+     *
+     * @param lotId identificador del lote
+     * @return número promedio de eventos por día
+     */
     public double calculateEventFrequency(Long lotId) {
 
         long totalEvents = countEvents(lotId);
@@ -148,6 +212,14 @@ public class LotService {
         return (double) totalEvents / days;
     }
 
+    /**
+     * Determina el estado de inactividad de un lote basado en el tiempo
+     * transcurrido desde el último evento y el umbral de inactividad del cultivo.
+     *
+     * @param lotId identificador del lote
+     * @return estado de inactividad: GREEN (activo), YELLOW (cerca del umbral),
+     *         RED (umbral superado), GRAY (sin eventos), UNKNOWN (sin umbral definido)
+     */
     public String getInactivityStatus(Long lotId) {
 
         Lot lot = lotRepository.findById(lotId)
@@ -171,7 +243,13 @@ public class LotService {
         return "GREEN";
     }
 
-
+    /**
+     * Calcula el progreso actual del cultivo como porcentaje.
+     *
+     * @param lotId identificador del lote
+     * @return porcentaje de progreso (0-100), basado en días transcurridos
+     *         desde la siembra vs días totales estimados de crecimiento
+     */
     public double getCropProgress(Long lotId) {
 
         Lot lot = lotRepository.findById(lotId)
@@ -202,6 +280,13 @@ public class LotService {
         return Math.min(progress, 100);
     }
 
+    /**
+     * Obtiene la fecha estimada de cosecha para un lote.
+     *
+     * @param lotId identificador del lote
+     * @return fecha estimada de cosecha, o null si no se ha establecido
+     * @throws RuntimeException si no se encuentra el lote
+     */
     public Instant getEstimatedHarvestDate(Long lotId) {
 
         Lot lot = lotRepository.findById(lotId)
@@ -210,6 +295,11 @@ public class LotService {
         return lot.getEstimatedHarvestDate();
     }
 
+    /**
+     * Obtiene la cantidad de eventos por día de los últimos 7 días.
+     *
+     * @return mapa con fechas (yyyy-MM-dd) como clave y cantidad de eventos como valor
+     */
     public Map<String, Long> getEventsLast7Days() {
 
         Instant start = Instant.now().minus(Duration.ofDays(7));
@@ -225,6 +315,13 @@ public class LotService {
         return response;
     }
 
+    /**
+     * Genera un resumen completo de un lote con todas sus métricas.
+     *
+     * @param lotId identificador del lote
+     * @return resumen con estado, métricas de tiempo, eventos y progreso
+     * @throws RuntimeException si no se encuentra el lote
+     */
     public LotSummary getLotSummary(Long lotId) {
         Lot lot = lotRepository.findById(lotId)
                 .orElseThrow(() -> new RuntimeException("Lot not found"));
@@ -261,8 +358,14 @@ public class LotService {
                 .build();
     }
 
-
-
+    /**
+     * Obtiene los detalles del progreso de un lote.
+     * Incluye fecha de siembra, días totales estimados, días transcurridos y días restantes.
+     *
+     * @param lotId identificador del lote
+     * @return mapa con claves: sowingDate, totalDays, daysElapsed, daysRemaining
+     * @throws RuntimeException si no se encuentra el lote
+     */
     public Map<String, Object> getLotProgressDetails(Long lotId) {
         Lot lot = lotRepository.findById(lotId)
                 .orElseThrow(() -> new RuntimeException("Lot not found"));

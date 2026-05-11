@@ -9,6 +9,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+/**
+ * Servicio de autenticación para el sistema SIGMA.
+ * Maneja el login de usuarios y la generación de tokens JWT.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -17,6 +21,14 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+    /**
+     * Autentica un usuario con email y contraseña, y genera un token JWT.
+     *
+     * @param email    dirección de correo electrónico del usuario
+     * @param password contraseña del usuario
+     * @return token JWT generado para la sesión autenticada
+     * @throws RuntimeException si las credenciales son inválidas o el usuario no existe
+     */
     public String login(String email, String password) {
 
         try {

@@ -18,6 +18,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Servicio para la generación del dashboard del sistema SIGMA.
+ * Proporciona una vista consolidada con estados de lotes, progreso de cultivos
+ * y gráficos de eventos de los últimos 30 días.
+ */
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
@@ -26,6 +31,14 @@ public class DashboardService {
     private final LotRepository lotRepository;
     private final LotService lotService;
 
+    /**
+     * Genera una respuesta completa del dashboard.
+     * Incluye estados de lotes, progreso de cultivos y gráfico de eventos
+     * de los últimos 30 días, opcionalmente filtrado por cultivo.
+     *
+     * @param cropId identificador del cultivo para filtrar (null para mostrar todos)
+     * @return objeto DashboardResponse con estados, progreso y gráfico de eventos
+     */
     public DashboardResponse getDashboard(Long cropId) {
         return DashboardResponse.builder()
                 .eventChart(buildEventChart(cropId))
@@ -34,7 +47,14 @@ public class DashboardService {
                 .build();
     }
 
-
+    /**
+     * Construye el gráfico de eventos de los últimos 30 días.
+     * Genera un mapa de fechas con conteo de eventos, inicializando todos
+     * los días con cero y luego actualizando con los datos reales.
+     *
+     * @param cropId identificador del cultivo para filtrar (null para todos)
+     * @return DTO con etiquetas (fechas) y valores (conteo de eventos)
+     */
     private EventChartDTO buildEventChart(Long cropId) {
 
         Instant start = Instant.now().minus(Duration.ofDays(30));
@@ -58,6 +78,12 @@ public class DashboardService {
                 .build();
     }
 
+    /**
+     * Obtiene la lista de lotes según el filtro de cultivo.
+     *
+     * @param cropId identificador del cultivo (null para todos los lotes)
+     * @return lista de entidades Lot
+     */
     private List<Lot> getLots(Long cropId) {
 
         if (cropId == null) {
@@ -67,7 +93,13 @@ public class DashboardService {
         return lotRepository.findByCropId(cropId);
     }
 
-
+    /**
+     * Construye la lista de estados de lotes con su estado actual e
+     * nivel de inactividad.
+     *
+     * @param cropId identificador del cultivo para filtrar (null para todos)
+     * @return lista de estados de lotes
+     */
     private List<LotStatusDTO> buildLotStatuses(Long cropId) {
 
         return getLots(cropId)
@@ -81,6 +113,13 @@ public class DashboardService {
                 .toList();
     }
 
+    /**
+     * Construye la lista de progreso de lotes con métricas de tiempo
+     * y progreso del cultivo.
+     *
+     * @param cropId identificador del cultivo para filtrar (null para todos)
+     * @return lista de progreso de lotes
+     */
     private List<LotProgressDTO> buildLotProgress(Long cropId) {
         return getLots(cropId).stream().map(lot -> {
             double progress = lotService.getCropProgress(lot.getId());

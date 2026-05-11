@@ -11,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Servicio para la gestión de usuarios.
+ * Maneja operaciones CRUD de usuarios, incluyendo creación con password encriptado.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -18,9 +22,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Crea un nuevo usuario en el sistema.
+     * Encripta la contraseña antes de almacenarla y asigna el rol especificado.
+     *
+     * @param request datos del usuario a crear (nombre, apellido, email, contraseña, rol)
+     * @return los datos del usuario creado
+     * @throws RuntimeException si el email ya está registrado en el sistema
+     */
     public UserResponse createUser(UserRequest request) {
 
-        // Validar que el email no exista
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("El email ya está registrado");
         }
@@ -37,6 +48,13 @@ public class UserService {
         return UserMapper.toDTO(userRepository.save(user));
     }
 
+    /**
+     * Obtiene un usuario por su identificador.
+     *
+     * @param id identificador único del usuario
+     * @return los datos del usuario encontrado
+     * @throws RuntimeException si no se encuentra un usuario con el ID especificado
+     */
     public UserResponse getById(Long id) {
 
         User user = userRepository.findById(id)
@@ -45,6 +63,11 @@ public class UserService {
         return UserMapper.toDTO(user);
     }
 
+    /**
+     * Obtiene todos los usuarios registrados en el sistema.
+     *
+     * @return lista de todos los usuarios
+     */
     public List<UserResponse> getAll() {
 
         return userRepository.findAll()
@@ -53,6 +76,16 @@ public class UserService {
                 .toList();
     }
 
+    /**
+     * Actualiza los datos de un usuario existente.
+     * Solo actualiza los campos proporcionados que no sean nulos.
+     * Si se incluye una nueva contraseña, la encripta antes de guardarla.
+     *
+     * @param id      identificador del usuario a actualizar
+     * @param request datos a actualizar (nombre, apellido, email, contraseña, rol)
+     * @return los datos del usuario actualizado
+     * @throws RuntimeException si no se encuentra un usuario con el ID especificado
+     */
     public UserResponse updateUser(Long id, UserRequest request) {
 
         User user = userRepository.findById(id)
@@ -73,6 +106,11 @@ public class UserService {
         return UserMapper.toDTO(userRepository.save(user));
     }
 
+    /**
+     * Elimina un usuario por su identificador.
+     *
+     * @param id identificador del usuario a eliminar
+     */
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

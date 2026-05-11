@@ -18,6 +18,10 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Servicio para la gestión de eventos en lotes.
+ * Maneja el registro, consulta y validación de eventos agrícolas (siembra, cosecha, etc.).
+ */
 @Service
 @RequiredArgsConstructor
 public class EventService {
@@ -27,6 +31,16 @@ public class EventService {
     private final EventTypeRepository eventTypeRepository;
     private final UserRepository userRepository;
 
+    /**
+     * Registra un nuevo evento en un lote.
+     * Valida la existencia del lote, tipo de evento y usuario. Si el evento es de tipo SOWING,
+     * calcula y asigna la fecha estimada de cosecha basándose en los días de crecimiento del cultivo.
+     *
+     * @param request datos del evento a registrar (lote, tipo, timestamp, descripción)
+     * @return los datos del evento registrado
+     * @throws RuntimeException si el lote, tipo de evento o usuario no existen,
+     *                          o si se viola la secuencia válida de eventos
+     */
     public EventResponse registerEvent(EventRequest request) {
 
         validateEvent(request.getLotId(), request.getType(), request.getTimestamp());
@@ -53,7 +67,6 @@ public class EventService {
 
         Event saved = eventRepository.save(event);
 
-        // 🌱 NUEVO → si es siembra, calcular fecha estimada
         if (type.getName().equals("SOWING")) {
 
             Integer days = lot.getCrop().getEstimatedGrowthDays();
@@ -68,13 +81,24 @@ public class EventService {
         return EventMapper.toDTO(saved);
     }
 
-
+    /**
+     * Obtiene un evento por su identificador.
+     *
+     * @param id identificador único del evento
+     * @return los datos del evento encontrado
+     * @throws RuntimeException si no se encuentra un evento con el ID especificado
+     */
     public EventResponse getEventById(Long id) {
         return eventRepository.findById(id)
                 .map(EventMapper::toDTO)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
     }
 
+    /**
+     * Obtiene todos los eventos registrados en el sistema.
+     *
+     * @return lista de todos los eventos
+     */
     public List<EventResponse> getAllEvents() {
         return eventRepository.findAll()
                 .stream()
@@ -82,6 +106,12 @@ public class EventService {
                 .toList();
     }
 
+    /**
+     * Obtiene todos los eventos de un lote específico, ordenados por timestamp ascendente.
+     *
+     * @param lotId identificador del lote
+     * @return lista de eventos del lote ordenados cronológicamente
+     */
     public List<EventResponse> getEventsByLot(Long lotId) {
 
         return eventRepository.findByLotIdOrderByTimestampAsc(lotId)
@@ -90,14 +120,37 @@ public class EventService {
                 .toList();
     }
 
+    /**
+     * Obtiene el historial completo de eventos de un lote (entidades Event sin convertir a DTO).
+     *
+     * @param lotId identificador del lote
+     * @return lista de entidades Event del lote ordenadas por timestamp
+     */
     public List<Event> getEventHistoryByLot(Long lotId) {
         return eventRepository.findByLotIdOrderByTimestampAsc(lotId);
     }
 
+    /**
+     * Filtra eventos por múltiples criterios: lote, tipo de evento y rango de fechas.
+     *
+     * @param lotId     identificador del lote (puede ser null)
+     * @param type      nombre del tipo de evento (puede ser null)
+     * @param startDate fecha de inicio del rango (puede ser null)
+     * @param endDate   fecha de fin del rango (puede ser null)
+     * @return lista de eventos que cumplen todos los criterios especificados
+     */
     public List<Event> filterEvents(Long lotId, String type, Instant startDate, Instant endDate) {
         return eventRepository.filterEvents(lotId, type, startDate, endDate);
     }
 
+    /**
+     * Valida que los datos básicos del evento sean correctos.
+     *
+     * @param lotId     identificador del lote
+     * @param typeName  nombre del tipo de evento
+     * @param timestamp fecha y hora del evento
+     * @throws RuntimeException si algún campo requerido es nulo o está en blanco
+     */
     private void validateEvent(Long lotId, String typeName, Instant timestamp) {
 
         if (lotId == null) {
@@ -113,6 +166,15 @@ public class EventService {
         }
     }
 
+    /**
+     * Valida que la secuencia de eventos sea correcta para un lote.
+     * Reglas: no se puede cosechar sin haber sembrado, no se puede sembrar dos veces,
+     * y no se pueden agregar eventos a un lote ya cosechado.
+     *
+     * @param lotId     identificador del lote
+     * @param eventType tipo de evento que se intenta registrar
+     * @throws RuntimeException si la secuencia de eventos es inválida
+     */
     private void validateEventSequence(Long lotId, String eventType) {
 
         boolean hasSowing = eventRepository.existsByLotIdAndTypeName(lotId, "SOWING");
