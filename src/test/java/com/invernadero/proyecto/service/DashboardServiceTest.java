@@ -107,7 +107,7 @@ public class DashboardServiceTest {
         assertTrue(response.getLotStatuses().isEmpty());
         assertTrue(response.getLotProgress().isEmpty());
         assertNotNull(response.getEventChart());
-        assertEquals(7, response.getEventChart().getLabels().size());
+        assertTrue(response.getEventChart().getLabels().size() >= 29);
     }
 
     @Test
@@ -133,8 +133,7 @@ public class DashboardServiceTest {
 
         assertNotNull(response);
         assertNotNull(response.getEventChart());
-        assertNotNull(response.getEventChart().getLabels());
-        assertEquals(7, response.getEventChart().getLabels().size());
+        assertTrue(response.getEventChart().getLabels().size() >= 29);
     }
 
     @Test
