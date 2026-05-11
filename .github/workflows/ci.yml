@@ -23,20 +23,24 @@ jobs:
         run: chmod +x ./mvnw
 
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
+      - name: Get Start Time
+        id: time
+        run: echo "START_TIME=$(date +%s)" >> $GITHUB_OUTPUT
+
       - name: Compile
-        run: ./mvnw -q clean compile
+        run: ./mvnw clean compile -q
 
       - name: Run tests
-        run: ./mvnw -q test
+        run: ./mvnw test -q
 
       - name: Package
-        run: ./mvnw -q package -DskipTests
+        run: ./mvnw package -DskipTests -q
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
@@ -44,3 +48,16 @@ jobs:
           name: sigma-jar
           path: target/SIGMA-*.jar
           retention-days: 7
+
+      - name: Generate Test Summary
+        run: |
+          echo "## Build Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Compile | :white_check_mark: Success |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test | :white_check_mark: Success |" >> $GITHUB_STEP_SUMMARY
+          echo "| Package | :white_check_mark: Success |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- \`sigma-jar\` available for 7 days" >> $GITHUB_STEP_SUMMARY
