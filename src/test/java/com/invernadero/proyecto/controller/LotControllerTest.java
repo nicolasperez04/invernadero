@@ -7,6 +7,7 @@ import com.invernadero.proyecto.Dto.response.LotSummary;
 import com.invernadero.proyecto.Security.JwtAuthenticationFilter;
 import com.invernadero.proyecto.Security.JwtService;
 import com.invernadero.proyecto.Service.LotService;
+import com.invernadero.proyecto.Service.PdfReportService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.hamcrest.Matchers;
 
 @WebMvcTest(LotController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -39,6 +41,9 @@ class LotControllerTest {
     @MockBean
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @MockBean
+    private PdfReportService pdfReportService;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -51,14 +56,15 @@ class LotControllerTest {
                 .build();
 
         when(lotService.createLot(request))
-                .thenReturn(LotResponse.builder().id(1L).name("Lot A").cropId(1L).cropName("Tomato").build());
+                .thenReturn(LotResponse.builder().id(1L).name("Lot A").cropId(1L).cropName("Tomato").status("CREATED").build());
 
         mockMvc.perform(post("/api/lots")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Lot A"));
+                .andExpect(jsonPath("$.name").value("Lot A"))
+                .andExpect(jsonPath("$.status").value("CREATED"));
     }
 
     @Test
@@ -72,29 +78,44 @@ class LotControllerTest {
     @Test
     void getLotById_success() throws Exception {
         when(lotService.getLotById(1L))
-                .thenReturn(LotResponse.builder().id(1L).name("Lot A").cropId(1L).cropName("Tomato").build());
+                .thenReturn(LotResponse.builder().id(1L).name("Lot A").cropId(1L).cropName("Tomato").status("IN_PRODUCTION").build());
 
         mockMvc.perform(get("/api/lots/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.status").value("IN_PRODUCTION"));
     }
 
     @Test
     void getAllLots_success() throws Exception {
-        when(lotService.getAllLots()).thenReturn(List.of(
-                LotResponse.builder().id(1L).name("Lot A").build(),
-                LotResponse.builder().id(2L).name("Lot B").build()
+        when(lotService.getAllLots(null)).thenReturn(List.of(
+                LotResponse.builder().id(1L).name("Lot A").status("CREATED").build(),
+                LotResponse.builder().id(2L).name("Lot B").status("IN_PRODUCTION").build()
         ));
 
         mockMvc.perform(get("/api/lots"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].status").value("CREATED"))
+                .andExpect(jsonPath("$[1].status").value("IN_PRODUCTION"));
+    }
+
+    @Test
+    void getAllLots_filterByStatus() throws Exception {
+        when(lotService.getAllLots("IN_PRODUCTION")).thenReturn(List.of(
+                LotResponse.builder().id(1L).name("Lot A").status("IN_PRODUCTION").build()
+        ));
+
+        mockMvc.perform(get("/api/lots?status=IN_PRODUCTION"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].status").value("IN_PRODUCTION"));
     }
 
     @Test
     void getLotsByCrop_success() throws Exception {
         when(lotService.getLotsByCrop(1L)).thenReturn(List.of(
-                LotResponse.builder().id(1L).name("Lot A").build()
+                LotResponse.builder().id(1L).name("Lot A").status("CREATED").build()
         ));
 
         mockMvc.perform(get("/api/lots/crop/1"))
@@ -105,12 +126,14 @@ class LotControllerTest {
     @Test
     void updateLot_success() throws Exception {
         when(lotService.updateLot(1L, LotRequest.builder().name("New").build()))
-                .thenReturn(LotResponse.builder().id(1L).name("New").build());
+                .thenReturn(LotResponse.builder().id(1L).name("New").status("CREATED").build());
 
         mockMvc.perform(put("/api/lots/1")
-                        .param("name", "New"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"New\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("New"));
+                .andExpect(jsonPath("$.name").value("New"))
+                .andExpect(jsonPath("$.status").value("CREATED"));
     }
 
     @Test
@@ -119,6 +142,18 @@ class LotControllerTest {
 
         mockMvc.perform(delete("/api/lots/1"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void downloadReport_success() throws Exception {
+        byte[] pdfBytes = "%PDF-1.4 test content".getBytes();
+        when(pdfReportService.generateLotReport(1L)).thenReturn(pdfBytes);
+
+        mockMvc.perform(get("/api/lots/1/report"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/pdf"))
+                .andExpect(header().string("Content-Disposition", Matchers.containsString("attachment; filename=\"informe_cosecha_1_")))
+                .andExpect(content().bytes(pdfBytes));
     }
 
     @Test

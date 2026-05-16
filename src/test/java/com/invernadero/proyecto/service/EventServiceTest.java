@@ -1,13 +1,17 @@
 package com.invernadero.proyecto.service;
 
 import com.invernadero.proyecto.Dto.Request.EventRequest;
+import com.invernadero.proyecto.Service.PdfReportService;
+import com.invernadero.proyecto.Service.SseService;
 import com.invernadero.proyecto.Dto.response.EventResponse;
 import com.invernadero.proyecto.Entity.Crop;
 import com.invernadero.proyecto.Entity.Event;
 import com.invernadero.proyecto.Entity.EventType;
 import com.invernadero.proyecto.Entity.Lot;
+import com.invernadero.proyecto.Entity.LotStatus;
 import com.invernadero.proyecto.Entity.User;
 import com.invernadero.proyecto.Repository.EventRepository;
+import com.invernadero.proyecto.Repository.CropEventTypeRepository;
 import com.invernadero.proyecto.Repository.EventTypeRepository;
 import com.invernadero.proyecto.Repository.LotRepository;
 import com.invernadero.proyecto.Repository.UserRepository;
@@ -39,13 +43,22 @@ class EventServiceTest {
     private EventTypeRepository eventTypeRepository;
 
     @Mock
+    private CropEventTypeRepository cropEventTypeRepository;
+
+    @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private PdfReportService pdfReportService;
+
+    @Mock
+    private SseService sseService;
 
     @InjectMocks
     private EventService eventService;
 
     @Test
-    void registerEvent_success() {
+    void registerEvent_sowing_setsStatusToInProduction() {
         EventRequest request = EventRequest.builder()
                 .lotId(1L)
                 .type("SOWING")
@@ -55,7 +68,7 @@ class EventServiceTest {
                 .build();
 
         Crop crop = Crop.builder().id(1L).name("Tomato").estimatedGrowthDays(60).inactivityDaysThreshold(7).build();
-        Lot lot = Lot.builder().id(1L).name("Lot A").crop(crop).build();
+        Lot lot = Lot.builder().id(1L).name("Lot A").crop(crop).status(LotStatus.CREATED).build();
         EventType type = EventType.builder().id(5L).name("SOWING").category("CYCLE").build();
         User user = User.builder().id(10L).name("Ana").build();
 
@@ -72,6 +85,7 @@ class EventServiceTest {
         when(lotRepository.findById(1L)).thenReturn(Optional.of(lot));
         when(eventTypeRepository.findByName("SOWING")).thenReturn(Optional.of(type));
         when(userRepository.findById(10L)).thenReturn(Optional.of(user));
+        when(cropEventTypeRepository.existsByCropIdAndEventTypeId(any(), any())).thenReturn(true);
         when(eventRepository.existsByLotIdAndTypeName(1L, "SOWING")).thenReturn(false);
         when(eventRepository.existsByLotIdAndTypeName(1L, "HARVEST")).thenReturn(false);
         when(eventRepository.save(any(Event.class))).thenReturn(saved);
@@ -84,6 +98,59 @@ class EventServiceTest {
         assertEquals(1L, response.getLotId());
 
         verify(eventRepository).save(any(Event.class));
+        verify(lotRepository).save(lot);
+        verify(sseService).sendEvent(eq("dashboard"), anyString());
+        assertEquals(LotStatus.IN_PRODUCTION, lot.getStatus());
+        assertEquals(request.getTimestamp().plus(java.time.Duration.ofDays(60)), lot.getEstimatedHarvestDate());
+    }
+
+    @Test
+    void registerEvent_harvest_success() {
+        EventRequest request = EventRequest.builder()
+                .lotId(1L)
+                .type("HARVEST")
+                .userId(10L)
+                .timestamp(Instant.parse("2024-01-02T00:00:00Z"))
+                .description("Harvest done")
+                .build();
+
+        Crop crop = Crop.builder().id(1L).name("Tomato").estimatedGrowthDays(60).inactivityDaysThreshold(7).build();
+        Lot lot = Lot.builder().id(1L).name("Lot A").crop(crop).status(LotStatus.IN_PRODUCTION).build();
+        EventType type = EventType.builder().id(6L).name("HARVEST").category("FINAL").build();
+        User user = User.builder().id(10L).name("Ana").build();
+
+        Event saved = Event.builder()
+                .id(101L)
+                .lot(lot)
+                .type(type)
+                .user(user)
+                .timestamp(request.getTimestamp())
+                .description(request.getDescription())
+                .createdAt(Instant.parse("2024-01-02T01:00:00Z"))
+                .build();
+
+        when(lotRepository.findById(1L)).thenReturn(Optional.of(lot));
+        when(eventTypeRepository.findByName("HARVEST")).thenReturn(Optional.of(type));
+        when(userRepository.findById(10L)).thenReturn(Optional.of(user));
+        when(cropEventTypeRepository.existsByCropIdAndEventTypeId(any(), any())).thenReturn(true);
+        when(eventRepository.existsByLotIdAndTypeName(1L, "SOWING")).thenReturn(true);
+        when(eventRepository.existsByLotIdAndTypeName(1L, "HARVEST")).thenReturn(false);
+        when(eventRepository.save(any(Event.class))).thenReturn(saved);
+        when(pdfReportService.generateLotReport(1L)).thenReturn(new byte[]{37, 80, 68, 70});
+
+        EventResponse response = eventService.registerEvent(request);
+
+        assertNotNull(response);
+        assertEquals(101L, response.getId());
+        assertEquals("HARVEST", response.getType());
+        assertEquals(1L, response.getLotId());
+
+        verify(eventRepository).save(any(Event.class));
+        verify(pdfReportService).generateLotReport(1L);
+        verify(lotRepository).save(lot);
+        verify(sseService).sendEvent(eq("dashboard"), anyString());
+        assertEquals(LotStatus.FINISHED, lot.getStatus());
+        assertEquals(request.getTimestamp(), lot.getEndDate());
     }
 
     @Test
@@ -102,7 +169,7 @@ class EventServiceTest {
                 () -> eventService.registerEvent(request));
 
         assertEquals("Lot not found", ex.getMessage());
-        verifyNoInteractions(eventTypeRepository, userRepository, eventRepository);
+        verifyNoInteractions(eventTypeRepository, userRepository, eventRepository, sseService);
     }
 
     @Test
@@ -122,7 +189,7 @@ class EventServiceTest {
                 () -> eventService.registerEvent(request));
 
         assertEquals("Event type not found", ex.getMessage());
-        verifyNoInteractions(userRepository, eventRepository);
+        verifyNoInteractions(userRepository, eventRepository, sseService);
     }
 
     @Test
@@ -143,7 +210,7 @@ class EventServiceTest {
                 () -> eventService.registerEvent(request));
 
         assertEquals("User not found", ex.getMessage());
-        verifyNoInteractions(eventRepository);
+        verifyNoInteractions(eventRepository, sseService);
     }
 
     @Test
@@ -156,9 +223,11 @@ class EventServiceTest {
                 .description("Harvest")
                 .build();
 
-        when(lotRepository.findById(1L)).thenReturn(Optional.of(Lot.builder().id(1L).name("Lot A").build()));
+        Crop crop = Crop.builder().id(1L).name("Tomato").estimatedGrowthDays(60).inactivityDaysThreshold(7).build();
+        when(lotRepository.findById(1L)).thenReturn(Optional.of(Lot.builder().id(1L).name("Lot A").crop(crop).build()));
         when(eventTypeRepository.findByName("HARVEST")).thenReturn(Optional.of(EventType.builder().id(6L).name("HARVEST").category("CYCLE").build()));
         when(userRepository.findById(10L)).thenReturn(Optional.of(User.builder().id(10L).name("Ana").build()));
+        when(cropEventTypeRepository.existsByCropIdAndEventTypeId(any(), any())).thenReturn(true);
         when(eventRepository.existsByLotIdAndTypeName(1L, "SOWING")).thenReturn(false);
         when(eventRepository.existsByLotIdAndTypeName(1L, "HARVEST")).thenReturn(false);
 
@@ -167,6 +236,7 @@ class EventServiceTest {
 
         assertEquals("Cannot register harvest before sowing", ex.getMessage());
         verify(eventRepository, never()).save(any());
+        verify(sseService, never()).sendEvent(anyString(), anyString());
     }
 
     @Test
@@ -179,9 +249,11 @@ class EventServiceTest {
                 .description("Sowing again")
                 .build();
 
-        when(lotRepository.findById(1L)).thenReturn(Optional.of(Lot.builder().id(1L).name("Lot A").build()));
+        Crop crop = Crop.builder().id(1L).name("Tomato").estimatedGrowthDays(60).inactivityDaysThreshold(7).build();
+        when(lotRepository.findById(1L)).thenReturn(Optional.of(Lot.builder().id(1L).name("Lot A").crop(crop).build()));
         when(eventTypeRepository.findByName("SOWING")).thenReturn(Optional.of(EventType.builder().id(5L).name("SOWING").category("CYCLE").build()));
         when(userRepository.findById(10L)).thenReturn(Optional.of(User.builder().id(10L).name("Ana").build()));
+        when(cropEventTypeRepository.existsByCropIdAndEventTypeId(any(), any())).thenReturn(true);
         when(eventRepository.existsByLotIdAndTypeName(1L, "SOWING")).thenReturn(true);
         when(eventRepository.existsByLotIdAndTypeName(1L, "HARVEST")).thenReturn(false);
 
@@ -190,6 +262,31 @@ class EventServiceTest {
 
         assertEquals("Sowing already exists for this lot", ex.getMessage());
         verify(eventRepository, never()).save(any());
+        verify(sseService, never()).sendEvent(anyString(), anyString());
+    }
+
+    @Test
+    void registerEvent_typeNotAvailableForCrop() {
+        EventRequest request = EventRequest.builder()
+                .lotId(1L)
+                .type("PRUNING")
+                .userId(10L)
+                .timestamp(Instant.parse("2024-01-02T00:00:00Z"))
+                .description("Pruning")
+                .build();
+
+        Crop crop = Crop.builder().id(1L).name("Tomato").estimatedGrowthDays(60).inactivityDaysThreshold(7).build();
+        when(lotRepository.findById(1L)).thenReturn(Optional.of(Lot.builder().id(1L).name("Lot A").crop(crop).build()));
+        when(eventTypeRepository.findByName("PRUNING")).thenReturn(Optional.of(EventType.builder().id(8L).name("PRUNING").category("CARE").build()));
+        when(userRepository.findById(10L)).thenReturn(Optional.of(User.builder().id(10L).name("Ana").build()));
+        when(cropEventTypeRepository.existsByCropIdAndEventTypeId(any(), any())).thenReturn(false);
+
+        RuntimeException ex = assertThrows(RuntimeException.class,
+                () -> eventService.registerEvent(request));
+
+        assertTrue(ex.getMessage().contains("no está disponible para el cultivo"));
+        verify(eventRepository, never()).save(any());
+        verify(sseService, never()).sendEvent(anyString(), anyString());
     }
 
     @Test
@@ -202,9 +299,11 @@ class EventServiceTest {
                 .description("Fertilization")
                 .build();
 
-        when(lotRepository.findById(1L)).thenReturn(Optional.of(Lot.builder().id(1L).name("Lot A").build()));
+        Crop crop = Crop.builder().id(1L).name("Tomato").estimatedGrowthDays(60).inactivityDaysThreshold(7).build();
+        when(lotRepository.findById(1L)).thenReturn(Optional.of(Lot.builder().id(1L).name("Lot A").crop(crop).build()));
         when(eventTypeRepository.findByName("FERTILIZATION")).thenReturn(Optional.of(EventType.builder().id(7L).name("FERTILIZATION").category("CARE").build()));
         when(userRepository.findById(10L)).thenReturn(Optional.of(User.builder().id(10L).name("Ana").build()));
+        when(cropEventTypeRepository.existsByCropIdAndEventTypeId(any(), any())).thenReturn(true);
         when(eventRepository.existsByLotIdAndTypeName(1L, "SOWING")).thenReturn(true);
         when(eventRepository.existsByLotIdAndTypeName(1L, "HARVEST")).thenReturn(true);
 
@@ -213,6 +312,7 @@ class EventServiceTest {
 
         assertEquals("This lot is already finished", ex.getMessage());
         verify(eventRepository, never()).save(any());
+        verify(sseService, never()).sendEvent(anyString(), anyString());
     }
 
     @Test

@@ -13,6 +13,9 @@ public class CropMapper {
                 .description(crop.getDescription())
                 .estimatedGrowthDays(Long.valueOf(crop.getEstimatedGrowthDays()))
                 .inactivityDaysThreshold(Long.valueOf(crop.getInactivityDaysThreshold()))
+                .irrigationFrequencyHours(crop.getIrrigationFrequencyHours())
+                .recommendedFertilizationDays(crop.getRecommendedFertilizationDays())
+                .recommendedPestControlDays(crop.getRecommendedPestControlDays())
                 .build();
     }
 

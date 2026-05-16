@@ -3,6 +3,7 @@ package com.invernadero.proyecto.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.invernadero.proyecto.Dto.Request.CropRequest;
 import com.invernadero.proyecto.Dto.response.CropResponse;
+import com.invernadero.proyecto.Entity.EventType;
 import com.invernadero.proyecto.Security.JwtAuthenticationFilter;
 import com.invernadero.proyecto.Security.JwtService;
 import com.invernadero.proyecto.Service.CropService;
@@ -46,6 +47,8 @@ class CropControllerTest {
         CropRequest request = CropRequest.builder()
                 .name("Tomato")
                 .description("Red")
+                .inactivityDaysThreshold(7)
+                .estimatedGrowthDays(60)
                 .build();
 
         when(cropService.createCrop(any(CropRequest.class)))
@@ -91,7 +94,12 @@ class CropControllerTest {
 
     @Test
     void update_success() throws Exception {
-        CropRequest request = CropRequest.builder().name("New").description("New desc").build();
+        CropRequest request = CropRequest.builder()
+                .name("New")
+                .description("New desc")
+                .inactivityDaysThreshold(7)
+                .estimatedGrowthDays(60)
+                .build();
 
         when(cropService.updateCrop(1L, request))
                 .thenReturn(CropResponse.builder().id(1L).name("New").description("New desc").build());
@@ -109,6 +117,34 @@ class CropControllerTest {
 
         mockMvc.perform(delete("/api/crops/1"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void getEventTypesByCrop_success() throws Exception {
+        when(cropService.getEventTypesByCrop(1L))
+                .thenReturn(List.of(EventType.builder().id(1L).name("SOWING").build()));
+
+        mockMvc.perform(get("/api/crops/1/event-types"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("SOWING"));
+    }
+
+    @Test
+    void addEventTypeToCrop_success() throws Exception {
+        doNothing().when(cropService).addEventTypeToCrop(1L, 2L);
+
+        mockMvc.perform(post("/api/crops/1/event-types/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Tipo de evento asociado exitosamente"));
+    }
+
+    @Test
+    void removeEventTypeFromCrop_success() throws Exception {
+        doNothing().when(cropService).removeEventTypeFromCrop(1L, 2L);
+
+        mockMvc.perform(delete("/api/crops/1/event-types/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Tipo de evento removido exitosamente"));
     }
 }
 

@@ -1,25 +1,28 @@
 package com.invernadero.proyecto.Service;
 
-import com.invernadero.proyecto.Dto.Request.CropRequest;
 import com.invernadero.proyecto.Dto.Request.LotRequest;
 import com.invernadero.proyecto.Dto.response.LotResponse;
 import com.invernadero.proyecto.Dto.response.LotSummary;
 import com.invernadero.proyecto.Entity.Crop;
 import com.invernadero.proyecto.Entity.Event;
 import com.invernadero.proyecto.Entity.Lot;
+import com.invernadero.proyecto.Entity.LotStatus;
 import com.invernadero.proyecto.Repository.CropRepository;
 import com.invernadero.proyecto.Repository.EventRepository;
 import com.invernadero.proyecto.Repository.LotRepository;
 import com.invernadero.proyecto.mapper.LotMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Servicio para la gestión de lotes de cultivo.
@@ -30,9 +33,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LotService {
 
+    private static final Logger log = LoggerFactory.getLogger(LotService.class);
+
     private final LotRepository lotRepository;
     private final CropRepository cropRepository;
     private final EventRepository eventRepository;
+    private final SseService sseService;
+
+    /**
+     * Migra los lotes existentes que no tienen status asignado.
+     * Se ejecuta una vez al iniciar la aplicación para backfill de datos legacy.
+     */
+    @PostConstruct
+    public void migrateExistingLotStatuses() {
+        List<Lot> lotsWithoutStatus = lotRepository.findAll().stream()
+                .filter(lot -> lot.getStatus() == null)
+                .toList();
+        for (Lot lot : lotsWithoutStatus) {
+            boolean hasSowing = eventRepository.existsByLotIdAndTypeName(lot.getId(), "SOWING");
+            boolean hasHarvest = eventRepository.existsByLotIdAndTypeName(lot.getId(), "HARVEST");
+            if (hasHarvest) {
+                lot.setStatus(LotStatus.FINISHED);
+            } else if (hasSowing) {
+                lot.setStatus(LotStatus.IN_PRODUCTION);
+            } else {
+                lot.setStatus(LotStatus.CREATED);
+            }
+            lotRepository.save(lot);
+        }
+        if (!lotsWithoutStatus.isEmpty()) {
+            log.info("Migrated {} lots with null status", lotsWithoutStatus.size());
+        }
+    }
 
     /**
      * Crea un nuevo lote asociado a un cultivo existente.
@@ -51,9 +83,12 @@ public class LotService {
                 .crop(crop)
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
+                .status(LotStatus.CREATED)
                 .build();
 
-        return LotMapper.toDTO(lotRepository.save(lot));
+        LotResponse response = LotMapper.toDTO(lotRepository.save(lot));
+        sseService.sendEvent("dashboard", "{\"type\":\"LOT_UPDATED\"}");
+        return response;
     }
 
     /**
@@ -70,11 +105,28 @@ public class LotService {
     }
 
     /**
-     * Obtiene todos los lotes registrados en el sistema.
+     * Obtiene todos los lotes registrados en el sistema, con filtro opcional por estado.
      *
      * @return lista de todos los lotes
      */
     public List<LotResponse> getAllLots() {
+        return getAllLots(null);
+    }
+
+    /**
+     * Obtiene todos los lotes registrados en el sistema, filtrados opcionalmente por estado.
+     *
+     * @param status filtro opcional por estado (CREATED, IN_PRODUCTION, FINISHED)
+     * @return lista de lotes filtrados
+     */
+    public List<LotResponse> getAllLots(String status) {
+        if (status != null && !status.isBlank()) {
+            LotStatus lotStatus = LotStatus.valueOf(status.toUpperCase());
+            return lotRepository.findByStatus(lotStatus)
+                    .stream()
+                    .map(LotMapper::toDTO)
+                    .toList();
+        }
         return lotRepository.findAll()
                 .stream()
                 .map(LotMapper::toDTO)
@@ -82,12 +134,30 @@ public class LotService {
     }
 
     /**
-     * Obtiene todos los lotes asociados a un cultivo específico.
+     * Obtiene todos los lotes asociados a un cultivo específico, con filtro opcional por estado.
      *
      * @param cropId identificador del cultivo
      * @return lista de lotes del cultivo especificado
      */
     public List<LotResponse> getLotsByCrop(Long cropId) {
+        return getLotsByCrop(cropId, null);
+    }
+
+    /**
+     * Obtiene todos los lotes asociados a un cultivo específico, filtrados opcionalmente por estado.
+     *
+     * @param cropId identificador del cultivo
+     * @param status filtro opcional por estado
+     * @return lista de lotes del cultivo filtrados
+     */
+    public List<LotResponse> getLotsByCrop(Long cropId, String status) {
+        if (status != null && !status.isBlank()) {
+            LotStatus lotStatus = LotStatus.valueOf(status.toUpperCase());
+            return lotRepository.findByCropIdAndStatus(cropId, lotStatus)
+                    .stream()
+                    .map(LotMapper::toDTO)
+                    .toList();
+        }
         return lotRepository.findByCropId(cropId)
                 .stream()
                 .map(LotMapper::toDTO)
@@ -120,7 +190,9 @@ public class LotService {
             lot.setEndDate(request.getEndDate());
         }
 
-        return LotMapper.toDTO(lotRepository.save(lot));
+        LotResponse response = LotMapper.toDTO(lotRepository.save(lot));
+        sseService.sendEvent("dashboard", "{\"type\":\"LOT_UPDATED\"}");
+        return response;
     }
 
     /**
@@ -130,24 +202,19 @@ public class LotService {
      */
     public void deleteLot(Long id) {
         lotRepository.deleteById(id);
+        sseService.sendEvent("dashboard", "{\"type\":\"LOT_UPDATED\"}");
     }
 
     /**
-     * Determina el estado actual de un lote basado en sus eventos.
+     * Obtiene el estado persistido de un lote.
      *
      * @param lotId identificador del lote
-     * @return estado del lote: CREATED (sin siembra), IN_PRODUCTION (siembra sin cosecha),
-     *         o FINISHED (ya cosechado)
+     * @return estado del lote: CREATED, IN_PRODUCTION, o FINISHED
      */
     public String getLotStatus(Long lotId) {
-
-        boolean hasSowing = eventRepository.existsByLotIdAndTypeName(lotId, "SOWING");
-        boolean hasHarvest = eventRepository.existsByLotIdAndTypeName(lotId, "HARVEST");
-
-        if (!hasSowing) return "CREATED";
-        if (hasHarvest) return "FINISHED";
-
-        return "IN_PRODUCTION";
+        return lotRepository.findById(lotId)
+                .map(lot -> lot.getStatus().name())
+                .orElseThrow(() -> new RuntimeException("Lot not found"));
     }
 
     /**
@@ -386,12 +453,12 @@ public class LotService {
             totalDays = (int) totalDaysCalc;
             daysRemaining = Math.max(0, totalDays - daysElapsed);
         }
-        return Map.of(
-                "sowingDate", sowingDate,
-                "totalDays", totalDays,
-                "daysElapsed", daysElapsed,
-                "daysRemaining", daysRemaining
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("sowingDate", sowingDate);
+        result.put("totalDays", totalDays);
+        result.put("daysElapsed", daysElapsed);
+        result.put("daysRemaining", daysRemaining);
+        return result;
     }
 
 

@@ -13,6 +13,7 @@ public class LotMapper {
                 .cropName(lot.getCrop().getName())
                 .startDate(lot.getStartDate())
                 .endDate(lot.getEndDate())
+                .status(lot.getStatus().name())
                 .build();
     }
 

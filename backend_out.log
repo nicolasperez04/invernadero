@@ -1,0 +1,502 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.SIGMA:SIGMA >---------------------------
+[INFO] Building SIGMA 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.8:run (default-cli) > test-compile @ SIGMA >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ SIGMA ---
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ SIGMA ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ SIGMA ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ SIGMA ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.5.8:run (default-cli) < test-compile @ SIGMA <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.8:run (default-cli) @ SIGMA ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.8)
+
+2026-05-16T11:34:06.234-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : Starting ProyectoApplication using Java 21.0.2 with PID 17672 (C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto\target\classes started by NICOLAS in C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto)
+2026-05-16T11:34:06.237-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : The following 1 profile is active: "prod"
+2026-05-16T11:34:06.294-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-05-16T11:34:06.294-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-05-16T11:34:07.900-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T11:34:08.113-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 192 ms. Found 7 JPA repository interfaces.
+2026-05-16T11:34:09.366-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-05-16T11:34:09.399-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T11:34:09.400-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.49]
+2026-05-16T11:34:09.484-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-16T11:34:09.487-05:00  INFO 17672 --- [SIGMA] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3191 ms
+2026-05-16T11:34:09.716-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-16T11:34:09.833-05:00  INFO 17672 --- [SIGMA] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.36.Final
+2026-05-16T11:34:09.891-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-16T11:34:10.327-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T11:34:10.375-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-16T11:34:10.668-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@848d7ce
+2026-05-16T11:34:10.670-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-16T11:34:10.745-05:00  WARN 17672 --- [SIGMA] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-16T11:34:10.770-05:00  INFO 17672 --- [SIGMA] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 18.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T11:34:12.950-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T11:34:13.133-05:00  INFO 17672 --- [SIGMA] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T11:34:13.759-05:00  INFO 17672 --- [SIGMA] [  restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-05-16T11:34:13.759-05:00  WARN 17672 --- [SIGMA] [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-05-16T11:34:13.974-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-16T11:34:15.538-05:00  WARN 17672 --- [SIGMA] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-16T11:34:16.268-05:00 DEBUG 17672 --- [SIGMA] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-05-16T11:34:16.795-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-05-16T11:34:16.866-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-05-16T11:34:16.884-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : Started ProyectoApplication in 11.21 seconds (process running for 11.862)
+2026-05-16T11:46:58.891-05:00  INFO 17672 --- [SIGMA] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-16T11:46:58.892-05:00  INFO 17672 --- [SIGMA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-16T11:46:58.894-05:00  INFO 17672 --- [SIGMA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-05-16T11:46:58.914-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:46:58.922-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:46:58.925-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:46:59.246-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:05.614-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:47:05.615-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:47:05.615-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:47:05.719-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:05.755-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/lots
+2026-05-16T11:47:05.838-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/lots
+2026-05-16T11:47:05.841-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:47:05.853-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:47:11.921-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:47:11.922-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:47:11.923-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:47:12.022-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:12.055-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/lots?status=IN_PRODUCTION
+2026-05-16T11:47:12.062-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/lots?status=IN_PRODUCTION
+2026-05-16T11:47:12.070-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:47:12.071-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:47:18.474-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:47:18.476-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:47:18.477-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:47:18.587-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:18.620-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/event-types
+2026-05-16T11:47:18.625-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/event-types
+2026-05-16T11:47:18.628-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.EventTypeController.getAllEventTypes(); target is of class [com.invernadero.proyecto.controller.EventTypeController]
+2026-05-16T11:47:18.629-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.EventTypeController.getAllEventTypes(); target is of class [com.invernadero.proyecto.controller.EventTypeController]
+2026-05-16T11:47:24.595-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:47:24.598-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:47:24.599-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:47:24.700-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:24.733-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/events
+2026-05-16T11:47:24.738-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/events
+2026-05-16T11:47:24.806-05:00  WARN 17672 --- [SIGMA] [nio-8080-exec-7] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.invernadero.proyecto.Dto.response.EventResponse com.invernadero.proyecto.controller.EventController.createEvent(com.invernadero.proyecto.Dto.Request.EventRequest) with 3 errors: [Field error in object 'eventRequest' on field 'userId': rejected value [null]; codes [NotNull.eventRequest.userId,NotNull.userId,NotNull.java.lang.Long,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [eventRequest.userId,userId]; arguments []; default message [userId]]; default message [El ID del usuario es obligatorio]] [Field error in object 'eventRequest' on field 'type': rejected value [null]; codes [NotNull.eventRequest.type,NotNull.type,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [eventRequest.type,type]; arguments []; default message [type]]; default message [El tipo de evento es obligatorio]] [Field error in object 'eventRequest' on field 'timestamp': rejected value [null]; codes [NotNull.eventRequest.timestamp,NotNull.timestamp,NotNull.java.time.Instant,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [eventRequest.timestamp,timestamp]; arguments []; default message [timestamp]]; default message [La fecha del evento es obligatoria]] ]
+2026-05-16T11:47:41.180-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:47:41.181-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:47:41.182-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:47:41.275-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:41.312-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/events
+2026-05-16T11:47:41.320-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/events
+2026-05-16T11:47:41.324-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.EventResponse com.invernadero.proyecto.controller.EventController.createEvent(com.invernadero.proyecto.Dto.Request.EventRequest); target is of class [com.invernadero.proyecto.controller.EventController]
+2026-05-16T11:47:41.325-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.EventResponse com.invernadero.proyecto.controller.EventController.createEvent(com.invernadero.proyecto.Dto.Request.EventRequest); target is of class [com.invernadero.proyecto.controller.EventController]
+2026-05-16T11:47:41.353-05:00  WARN 17672 --- [SIGMA] [io-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: El tipo de evento 'SOWING' no está disponible para el cultivo 'Cultivo Test 1778292644909']
+2026-05-16T11:47:47.726-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:47:47.727-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:47:47.728-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:47:47.832-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:47.864-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/lots/10
+2026-05-16T11:47:47.869-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/lots/10
+2026-05-16T11:47:47.871-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.getLotById(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:47:47.872-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.getLotById(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:47:47.909-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/crop-event-types
+2026-05-16T11:47:47.913-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/crop-event-types
+2026-05-16T11:47:47.920-05:00  WARN 17672 --- [SIGMA] [nio-8080-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource api/crop-event-types.]
+2026-05-16T11:47:54.209-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:47:54.211-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:47:54.212-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:47:54.317-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:47:54.356-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T11:47:54.361-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/crops
+2026-05-16T11:47:54.363-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T11:47:54.363-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T11:48:07.942-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:48:07.942-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:48:07.943-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:48:08.036-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:48:08.123-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/lots
+2026-05-16T11:48:08.129-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/lots
+2026-05-16T11:48:08.138-05:00  WARN 17672 --- [SIGMA] [nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.createLot(com.invernadero.proyecto.Dto.Request.LotRequest): [Field error in object 'lotRequest' on field 'startDate': rejected value [null]; codes [NotNull.lotRequest.startDate,NotNull.startDate,NotNull.java.time.Instant,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [lotRequest.startDate,startDate]; arguments []; default message [startDate]]; default message [La fecha de inicio es obligatoria]] ]
+2026-05-16T11:48:18.679-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:48:18.679-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:48:18.680-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:48:18.789-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:48:18.844-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /api/lots
+2026-05-16T11:48:18.853-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /api/lots
+2026-05-16T11:48:18.855-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.createLot(com.invernadero.proyecto.Dto.Request.LotRequest); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:18.856-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.createLot(com.invernadero.proyecto.Dto.Request.LotRequest); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:27.062-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:48:27.064-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:48:27.065-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:48:27.172-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:48:27.214-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/events
+2026-05-16T11:48:27.219-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/events
+2026-05-16T11:48:27.223-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.EventResponse com.invernadero.proyecto.controller.EventController.createEvent(com.invernadero.proyecto.Dto.Request.EventRequest); target is of class [com.invernadero.proyecto.controller.EventController]
+2026-05-16T11:48:27.225-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.EventResponse com.invernadero.proyecto.controller.EventController.createEvent(com.invernadero.proyecto.Dto.Request.EventRequest); target is of class [com.invernadero.proyecto.controller.EventController]
+2026-05-16T11:48:27.287-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/lots/13
+2026-05-16T11:48:27.293-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/lots/13
+2026-05-16T11:48:27.295-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.getLotById(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:27.296-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.getLotById(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:36.168-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:48:36.170-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:48:36.170-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:48:36.282-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:48:36.324-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /api/events
+2026-05-16T11:48:36.331-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /api/events
+2026-05-16T11:48:36.333-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.EventResponse com.invernadero.proyecto.controller.EventController.createEvent(com.invernadero.proyecto.Dto.Request.EventRequest); target is of class [com.invernadero.proyecto.controller.EventController]
+2026-05-16T11:48:36.334-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.EventResponse com.invernadero.proyecto.controller.EventController.createEvent(com.invernadero.proyecto.Dto.Request.EventRequest); target is of class [com.invernadero.proyecto.controller.EventController]
+2026-05-16T11:48:36.641-05:00  INFO 17672 --- [SIGMA] [nio-8080-exec-5] c.i.proyecto.Service.EventService        : PDF report generated for lot 'Test Estado E2E' (1816 bytes)
+2026-05-16T11:48:36.650-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/lots/13
+2026-05-16T11:48:36.657-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/lots/13
+2026-05-16T11:48:36.658-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.getLotById(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:36.659-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotResponse com.invernadero.proyecto.controller.LotController.getLotById(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.683-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:48:44.684-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:48:44.684-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:48:44.779-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:48:44.808-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/lots
+2026-05-16T11:48:44.817-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/lots
+2026-05-16T11:48:44.818-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.819-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.851-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/lots?status=CREATED
+2026-05-16T11:48:44.855-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/lots?status=CREATED
+2026-05-16T11:48:44.855-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.857-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.872-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/lots?status=IN_PRODUCTION
+2026-05-16T11:48:44.877-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/lots?status=IN_PRODUCTION
+2026-05-16T11:48:44.878-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.879-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.892-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/lots?status=FINISHED
+2026-05-16T11:48:44.897-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/lots?status=FINISHED
+2026-05-16T11:48:44.898-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:48:44.899-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:50:07.132-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard
+2026-05-16T11:50:07.133-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T11:50:07.839-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T11:50:07.907-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/lots
+2026-05-16T11:50:07.908-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/event-types
+2026-05-16T11:56:54.515-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/auth/login
+2026-05-16T11:56:54.518-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-05-16T11:56:54.522-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-05-16T11:56:54.522-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-05-16T11:56:54.606-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-05-16T11:56:54.636-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/notifications/unread-count
+2026-05-16T11:56:54.639-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/notifications/unread-count
+2026-05-16T11:56:54.643-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/crops
+2026-05-16T11:56:54.643-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard
+2026-05-16T11:56:54.644-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/notifications/unread-count
+2026-05-16T11:56:54.646-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T11:56:54.646-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard
+2026-05-16T11:56:54.647-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.Map com.invernadero.proyecto.controller.NotificationController.getUnreadCount(); target is of class [com.invernadero.proyecto.controller.NotificationController]
+2026-05-16T11:56:54.650-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.Map com.invernadero.proyecto.controller.NotificationController.getUnreadCount(); target is of class [com.invernadero.proyecto.controller.NotificationController]
+2026-05-16T11:56:54.651-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/crops
+2026-05-16T11:56:54.654-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T11:56:54.655-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T11:56:54.657-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard
+2026-05-16T11:56:54.659-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.DashboardResponse com.invernadero.proyecto.controller.DashboardController.getDashboard(java.lang.Long); target is of class [com.invernadero.proyecto.controller.DashboardController]
+2026-05-16T11:56:54.661-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.DashboardResponse com.invernadero.proyecto.controller.DashboardController.getDashboard(java.lang.Long); target is of class [com.invernadero.proyecto.controller.DashboardController]
+2026-05-16T11:57:01.305-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/lots
+2026-05-16T11:57:01.305-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/crops
+2026-05-16T11:57:01.310-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/lots
+2026-05-16T11:57:01.310-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T11:57:01.316-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/crops
+2026-05-16T11:57:01.316-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/lots
+2026-05-16T11:57:01.317-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T11:57:01.317-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:01.317-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T11:57:01.317-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:05.664-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/lots/13/summary
+2026-05-16T11:57:05.670-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/lots/13/summary
+2026-05-16T11:57:05.674-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/lots/13/summary
+2026-05-16T11:57:05.677-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotSummary com.invernadero.proyecto.controller.LotController.getSummary(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:05.677-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.LotSummary com.invernadero.proyecto.controller.LotController.getSummary(java.lang.Long); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:16.411-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/lots?status=IN_PRODUCTION
+2026-05-16T11:57:16.413-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/lots?status=IN_PRODUCTION
+2026-05-16T11:57:16.417-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/lots?status=IN_PRODUCTION
+2026-05-16T11:57:16.418-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:16.419-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:17.794-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/lots?status=CREATED
+2026-05-16T11:57:17.798-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/lots?status=CREATED
+2026-05-16T11:57:17.804-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/lots?status=CREATED
+2026-05-16T11:57:17.805-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:17.806-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:18.867-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/lots?status=FINISHED
+2026-05-16T11:57:18.871-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/lots?status=FINISHED
+2026-05-16T11:57:18.875-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/lots?status=FINISHED
+2026-05-16T11:57:18.876-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:18.877-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:20.756-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/lots
+2026-05-16T11:57:20.761-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/lots
+2026-05-16T11:57:20.765-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/lots
+2026-05-16T11:57:20.766-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:57:20.767-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.LotController.getAllLots(java.lang.String); target is of class [com.invernadero.proyecto.controller.LotController]
+2026-05-16T11:58:37.081-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/crops
+2026-05-16T11:58:37.082-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard
+2026-05-16T11:58:37.087-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T11:58:37.087-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard
+2026-05-16T11:58:37.093-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard
+2026-05-16T11:58:37.093-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/crops
+2026-05-16T11:58:37.094-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.DashboardResponse com.invernadero.proyecto.controller.DashboardController.getDashboard(java.lang.Long); target is of class [com.invernadero.proyecto.controller.DashboardController]
+2026-05-16T11:58:37.094-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T11:58:37.095-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public com.invernadero.proyecto.Dto.response.DashboardResponse com.invernadero.proyecto.controller.DashboardController.getDashboard(java.lang.Long); target is of class [com.invernadero.proyecto.controller.DashboardController]
+2026-05-16T11:58:37.095-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-6] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public java.util.List com.invernadero.proyecto.controller.CropController.getAll(); target is of class [com.invernadero.proyecto.controller.CropController]
+2026-05-16T12:11:05.738-05:00  INFO 17672 --- [SIGMA] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 88 class path changes (0 additions, 88 deletions, 0 modifications)
+2026-05-16T12:11:05.744-05:00  INFO 17672 --- [SIGMA] [       Thread-5] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-05-16T12:11:05.754-05:00  INFO 17672 --- [SIGMA] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-05-16T12:11:05.762-05:00  INFO 17672 --- [SIGMA] [       Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T12:11:05.770-05:00  INFO 17672 --- [SIGMA] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-05-16T12:11:05.794-05:00  INFO 17672 --- [SIGMA] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.8)
+
+2026-05-16T12:11:05.923-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : Starting ProyectoApplication using Java 21.0.2 with PID 17672 (C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto\target\classes started by NICOLAS in C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto)
+2026-05-16T12:11:05.923-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : The following 1 profile is active: "prod"
+2026-05-16T12:11:06.237-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T12:11:06.240-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 JPA repository interfaces.
+2026-05-16T12:11:06.415-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-05-16T12:11:06.417-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T12:11:06.418-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.49]
+2026-05-16T12:11:06.458-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-16T12:11:06.458-05:00  INFO 17672 --- [SIGMA] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 532 ms
+2026-05-16T12:11:06.520-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-16T12:11:06.524-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-16T12:11:06.548-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T12:11:06.550-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-05-16T12:11:06.724-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@49126a93
+2026-05-16T12:11:06.725-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-05-16T12:11:06.734-05:00  WARN 17672 --- [SIGMA] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-16T12:11:06.736-05:00  INFO 17672 --- [SIGMA] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 18.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T12:11:06.768-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T12:11:06.769-05:00  INFO 17672 --- [SIGMA] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T12:11:06.826-05:00  WARN 17672 --- [SIGMA] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-16T12:11:07.145-05:00  WARN 17672 --- [SIGMA] [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 015375ca-cdc2-4be2-852b-9294ab5b442c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-05-16T12:11:07.150-05:00  INFO 17672 --- [SIGMA] [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-05-16T12:11:07.186-05:00 DEBUG 17672 --- [SIGMA] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CsrfFilter, LogoutFilter, UsernamePasswordAuthenticationFilter, DefaultResourcesFilter, DefaultLoginPageGeneratingFilter, DefaultLogoutPageGeneratingFilter, BasicAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-05-16T12:11:07.214-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-05-16T12:11:07.229-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-05-16T12:11:07.232-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : Started ProyectoApplication in 1.365 seconds (process running for 2222.211)
+2026-05-16T12:11:07.239-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   MessageSourceAutoConfiguration matched:
+      - ResourceBundle found bundle file [C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto\target\classes\messages.properties] (MessageSourceAutoConfiguration.ResourceBundleCondition)
+      - @ConditionalOnMissingBean (names: messageSource; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   SpringBootWebSecurityConfiguration.SecurityFilterChainConfiguration matched:
+      - AllNestedConditions 2 matched 0 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) did not find any beans; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+   UserDetailsServiceAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - AnyNestedCondition 1 matched 2 did not; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.PasswordConfigured @ConditionalOnProperty (spring.security.user.password) did not find property 'spring.security.user.password'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.NameConfigured @ConditionalOnProperty (spring.security.user.name) did not find property 'spring.security.user.name'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.MissingAlternative @ConditionalOnMissingClass did not find unwanted classes 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository', 'org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector', 'org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository' (UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured)
+      - @ConditionalOnBean (types: org.springframework.security.config.ObjectPostProcessor; SearchStrategy: all) found beans 'objectPostProcessor', 'webAuthorizationManagerPostProcessor', 'filterChainDecoratorPostProcessor', 'authenticationManagerPostProcessor'; @ConditionalOnMissingBean (types: org.springframework.security.authentication.AuthenticationManager,org.springframework.security.authentication.AuthenticationProvider,org.springframework.security.core.userdetails.UserDetailsService,org.springframework.security.authentication.AuthenticationManagerResolver,?; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ValidationAutoConfiguration#defaultValidator matched:
+      - @ConditionalOnMissingBean (types: jakarta.validation.Validator; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#localeResolver matched:
+      - @ConditionalOnMissingBean (names: localeResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2026-05-16T12:11:10.117-05:00  INFO 17672 --- [SIGMA] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 90 class path changes (90 additions, 0 deletions, 0 modifications)
+2026-05-16T12:11:10.120-05:00  INFO 17672 --- [SIGMA] [       Thread-7] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-05-16T12:11:10.128-05:00  INFO 17672 --- [SIGMA] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-05-16T12:11:10.130-05:00  INFO 17672 --- [SIGMA] [       Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T12:11:10.131-05:00  INFO 17672 --- [SIGMA] [       Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-05-16T12:11:10.133-05:00  INFO 17672 --- [SIGMA] [       Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.8)
+
+2026-05-16T12:11:10.226-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : Starting ProyectoApplication using Java 21.0.2 with PID 17672 (C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto\target\classes started by NICOLAS in C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto)
+2026-05-16T12:11:10.226-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : The following 1 profile is active: "prod"
+2026-05-16T12:11:10.653-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-16T12:11:10.711-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 7 JPA repository interfaces.
+2026-05-16T12:11:10.904-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-05-16T12:11:10.906-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-16T12:11:10.907-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.49]
+2026-05-16T12:11:10.934-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-16T12:11:10.934-05:00  INFO 17672 --- [SIGMA] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 706 ms
+2026-05-16T12:11:11.021-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-16T12:11:11.026-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-16T12:11:11.041-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-16T12:11:11.044-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-05-16T12:11:11.102-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@952b0d8
+2026-05-16T12:11:11.103-05:00  INFO 17672 --- [SIGMA] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-05-16T12:11:11.114-05:00  WARN 17672 --- [SIGMA] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-16T12:11:11.117-05:00  INFO 17672 --- [SIGMA] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 18.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-16T12:11:11.392-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-16T12:11:11.498-05:00  INFO 17672 --- [SIGMA] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-16T12:11:11.637-05:00  INFO 17672 --- [SIGMA] [  restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-05-16T12:11:11.640-05:00  WARN 17672 --- [SIGMA] [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-05-16T12:11:11.956-05:00  WARN 17672 --- [SIGMA] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-16T12:11:12.092-05:00 DEBUG 17672 --- [SIGMA] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-05-16T12:11:12.232-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-05-16T12:11:12.246-05:00  INFO 17672 --- [SIGMA] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-05-16T12:11:12.250-05:00  INFO 17672 --- [SIGMA] [  restartedMain] c.i.proyecto.ProyectoApplication         : Started ProyectoApplication in 2.051 seconds (process running for 2227.228)
+2026-05-16T12:11:12.252-05:00  INFO 17672 --- [SIGMA] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+    None
+
+
+Negative matches:
+-----------------
+
+   MessageSourceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnMissingBean (names: messageSource; SearchStrategy: current) found beans named messageSource (OnBeanCondition)
+      Matched:
+         - ResourceBundle found bundle file [C:\Users\NICOLAS\Desktop\UNIVERSIDAD\NOVENO SEMESTRE\ELECTIVA INGENIERÍA I\back + front\proyecto\target\classes\messages.properties] (MessageSourceAutoConfiguration.ResourceBundleCondition)
+
+   SpringBootWebSecurityConfiguration.SecurityFilterChainConfiguration:
+      Did not match:
+         - AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.web.SecurityFilterChain' filterChain; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+   UserDetailsServiceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.security.authentication.AuthenticationManager,org.springframework.security.authentication.AuthenticationProvider,org.springframework.security.core.userdetails.UserDetailsService,org.springframework.security.authentication.AuthenticationManagerResolver,?; SearchStrategy: all) found beans of type 'org.springframework.security.authentication.AuthenticationManager' authenticationManager and found beans of type 'org.springframework.security.core.userdetails.UserDetailsService' customUserDetailsService and found beans of type 'org.springframework.security.authentication.AuthenticationProvider' authenticationProvider (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+         - found 'session' scope (OnWebApplicationCondition)
+         - AnyNestedCondition 1 matched 2 did not; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.PasswordConfigured @ConditionalOnProperty (spring.security.user.password) did not find property 'spring.security.user.password'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.NameConfigured @ConditionalOnProperty (spring.security.user.name) did not find property 'spring.security.user.name'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.MissingAlternative @ConditionalOnMissingClass did not find unwanted classes 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository', 'org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector', 'org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository' (UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured)
+
+   ValidationAutoConfiguration#defaultValidator:
+      Did not match:
+         - @ConditionalOnMissingBean (types: jakarta.validation.Validator; SearchStrategy: all) found beans of type 'jakarta.validation.Validator' validator (OnBeanCondition)
+
+   WebMvcAutoConfiguration.EnableWebMvcConfiguration#localeResolver:
+      Did not match:
+         - @ConditionalOnMissingBean (names: localeResolver; SearchStrategy: all) found beans named localeResolver (OnBeanCondition)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2026-05-16T12:12:19.767-05:00  INFO 17672 --- [SIGMA] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-16T12:12:19.769-05:00  INFO 17672 --- [SIGMA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-16T12:12:19.772-05:00  INFO 17672 --- [SIGMA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-05-16T12:12:19.774-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard
+2026-05-16T12:12:19.774-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard
+2026-05-16T12:12:19.774-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T12:12:20.090-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/crops
+2026-05-16T12:12:20.189-05:00 DEBUG 17672 --- [SIGMA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/lots
+2026-05-16T12:12:20.190-05:00 DEBUG 17672 --- [SIGMA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/event-types
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  40:21 min
+[INFO] Finished at: 2026-05-16T12:14:21-05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.5.8:run (default-cli) on project SIGMA: Process terminated with exit code: -1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

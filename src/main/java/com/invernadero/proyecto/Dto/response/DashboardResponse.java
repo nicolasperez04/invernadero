@@ -17,6 +17,7 @@ public class DashboardResponse {
     private EventChartDTO eventChart;
     private List<LotStatusDTO> lotStatuses;
     private List<LotProgressDTO> lotProgress;
+    private List<UpcomingHarvestDTO> upcomingHarvests;
 
 
 }

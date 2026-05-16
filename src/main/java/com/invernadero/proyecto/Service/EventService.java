@@ -2,15 +2,20 @@ package com.invernadero.proyecto.Service;
 
 import com.invernadero.proyecto.Dto.Request.EventRequest;
 import com.invernadero.proyecto.Dto.response.EventResponse;
+import com.invernadero.proyecto.Entity.Crop;
 import com.invernadero.proyecto.Entity.Event;
 import com.invernadero.proyecto.Entity.EventType;
 import com.invernadero.proyecto.Entity.Lot;
+import com.invernadero.proyecto.Entity.LotStatus;
 import com.invernadero.proyecto.Entity.User;
+import com.invernadero.proyecto.Repository.CropEventTypeRepository;
 import com.invernadero.proyecto.Repository.EventRepository;
 import com.invernadero.proyecto.Repository.EventTypeRepository;
 import com.invernadero.proyecto.Repository.LotRepository;
 import com.invernadero.proyecto.Repository.UserRepository;
 import com.invernadero.proyecto.mapper.EventMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -26,10 +31,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EventService {
 
+    private static final Logger log = LoggerFactory.getLogger(EventService.class);
+
     private final EventRepository eventRepository;
     private final LotRepository lotRepository;
     private final EventTypeRepository eventTypeRepository;
     private final UserRepository userRepository;
+    private final CropEventTypeRepository cropEventTypeRepository;
+    private final PdfReportService pdfReportService;
+    private final SseService sseService;
 
     /**
      * Registra un nuevo evento en un lote.
@@ -54,6 +64,13 @@ public class EventService {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        Crop crop = lot.getCrop();
+        boolean isTypeValid = cropEventTypeRepository.existsByCropIdAndEventTypeId(crop.getId(), type.getId());
+        if (!isTypeValid) {
+            throw new RuntimeException("El tipo de evento '" + type.getName()
+                    + "' no está disponible para el cultivo '" + crop.getName() + "'");
+        }
+
         validateEventSequence(lot.getId(), type.getName());
 
         Event event = Event.builder()
@@ -67,14 +84,31 @@ public class EventService {
 
         Event saved = eventRepository.save(event);
 
+        sseService.sendEvent("dashboard", "{\"type\":\"EVENT_CREATED\"}");
+
         if (type.getName().equals("SOWING")) {
+            lot.setStatus(LotStatus.IN_PRODUCTION);
 
             Integer days = lot.getCrop().getEstimatedGrowthDays();
 
             if (days != null) {
                 Instant estimatedHarvest = request.getTimestamp().plus(Duration.ofDays(days));
                 lot.setEstimatedHarvestDate(estimatedHarvest);
-                lotRepository.save(lot);
+            }
+
+            lotRepository.save(lot);
+        }
+
+        if (type.getName().equals("HARVEST")) {
+            lot.setStatus(LotStatus.FINISHED);
+            lot.setEndDate(request.getTimestamp());
+            lotRepository.save(lot);
+
+            try {
+                byte[] pdf = pdfReportService.generateLotReport(lot.getId());
+                log.info("PDF report generated for lot '{}' ({} bytes)", lot.getName(), pdf.length);
+            } catch (Exception e) {
+                log.error("Failed to generate PDF report for lot '{}'", lot.getName(), e);
             }
         }
 

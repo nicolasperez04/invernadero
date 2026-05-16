@@ -1,0 +1,28 @@
+# Sensitive files
+.env
+.env.*
+*.pem
+*.key
+
+# Build artifacts
+target/
+*.jar
+*.jar.original
+
+# Logs
+*.log
+backend_err.log
+backend_out.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore

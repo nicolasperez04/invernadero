@@ -90,10 +90,18 @@ public class JwtService {
         return  getClaim(token,Claims::getExpiration).before(new Date());
     }
 
-    public  boolean validateToken (String token, UserDetails userDetails){
+    public boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsername(token);
 
         return (username.equals(userDetails.getUsername()) && !tokenExpired(token));
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            return !tokenExpired(token);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 

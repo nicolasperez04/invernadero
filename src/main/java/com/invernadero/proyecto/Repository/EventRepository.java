@@ -23,6 +23,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     // Obtener último evento
     Optional<Event> findTopByLotIdOrderByTimestampDesc(Long lotId);
 
+    // Obtener último evento de un tipo específico para un lote
+    @Query("SELECT e FROM Event e WHERE e.lot.id = :lotId AND e.type.id = :typeId ORDER BY e.timestamp DESC")
+    Optional<Event> findTopByLotIdAndTypeIdOrderByTimestampDesc(@Param("lotId") Long lotId, @Param("typeId") Long typeId);
+
 
     @Query("""
         SELECT e FROM Event e

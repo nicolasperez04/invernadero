@@ -36,8 +36,8 @@ jobs:
       - name: Compile
         run: ./mvnw clean compile -q
 
-      - name: Run tests
-        run: ./mvnw test -q
+      - name: Run tests + JaCoCo coverage
+        run: ./mvnw verify -q
 
       - name: Package
         run: ./mvnw package -DskipTests -q
@@ -48,6 +48,13 @@ jobs:
           name: sigma-jar
           path: target/SIGMA-*.jar
           retention-days: 7
+
+      - name: Upload JaCoCo coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+          retention-days: 30
 
       - name: Get Build Time
         id: build-time
@@ -110,3 +117,65 @@ jobs:
           echo "- \`sigma-jar\` (92 MB) - disponible 7 días" >> $GITHUB_STEP_SUMMARY
         env:
           BUILD_TIME: ${{ steps.build-time.outputs.BUILD_TIME }}
+
+      - name: Comment coverage on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const csv = fs.readFileSync('target/site/jacoco/jacoco.csv', 'utf8');
+            const rows = csv.trim().split('\n').slice(1);
+
+            let lm = 0, lc = 0, bm = 0, bc = 0;
+            for (const row of rows) {
+              const c = row.split(',');
+              lm += Number(c[7]);
+              lc += Number(c[8]);
+              bm += Number(c[5]);
+              bc += Number(c[6]);
+            }
+
+            const linePct = Math.round(lc / (lm + lc) * 100);
+            const brPct   = bc + bm > 0 ? Math.round(bc / (bc + bm) * 100) : 100;
+            const passes  = linePct >= 80 && brPct >= 60;
+            const emoji   = passes ? '✅' : '❌';
+
+            const body = `${emoji} **Code Coverage Report**
+
+            | Métrica | Cobertura | Umbral |
+            |---------|-----------|--------|
+            | Líneas  | ${linePct}% | 80% |
+            | Ramas   | ${brPct}% | 60% |
+
+            ${!passes ? '⚠️ La cobertura está por debajo del umbral. Agrega tests antes de mergear.' : ''}
+
+            📦 [Descargar reporte detallado](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+            <!-- coverage-report -->`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const marker = '<!-- coverage-report -->';
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+

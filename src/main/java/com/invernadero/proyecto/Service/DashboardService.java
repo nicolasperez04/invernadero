@@ -4,6 +4,7 @@ import com.invernadero.proyecto.Dto.response.DashboardResponse;
 import com.invernadero.proyecto.Dto.response.EventChartDTO;
 import com.invernadero.proyecto.Dto.response.LotProgressDTO;
 import com.invernadero.proyecto.Dto.response.LotStatusDTO;
+import com.invernadero.proyecto.Dto.response.UpcomingHarvestDTO;
 import com.invernadero.proyecto.Entity.Lot;
 import com.invernadero.proyecto.Repository.EventRepository;
 import com.invernadero.proyecto.Repository.LotRepository;
@@ -13,7 +14,10 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +48,7 @@ public class DashboardService {
                 .eventChart(buildEventChart(cropId))
                 .lotStatuses(buildLotStatuses(cropId))
                 .lotProgress(buildLotProgress(cropId))
+                .upcomingHarvests(buildUpcomingHarvests(cropId))
                 .build();
     }
 
@@ -131,12 +136,33 @@ public class DashboardService {
                     .lotName(lot.getName())
                     .progress(progress)
                     .estimatedHarvestDate(harvestDateStr)
-                    .sowingDate(String.valueOf((Instant) details.get("sowingDate")))
+                    .sowingDate(details.get("sowingDate") != null ? details.get("sowingDate").toString() : "Sin fecha")
                     .totalDays((int) details.get("totalDays"))
                     .daysElapsed((int) details.get("daysElapsed"))
                     .daysRemaining((int) details.get("daysRemaining"))
                     .build();
         }).toList();
+    }
+
+    private List<UpcomingHarvestDTO> buildUpcomingHarvests(Long cropId) {
+        return getLots(cropId).stream()
+                .filter(lot -> lot.getEstimatedHarvestDate() != null)
+                .filter(lot -> "IN_PRODUCTION".equals(lotService.getLotStatus(lot.getId())))
+                .map(lot -> {
+                    LocalDate harvestDate = lot.getEstimatedHarvestDate()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+                    long daysRemaining = ChronoUnit.DAYS.between(LocalDate.now(), harvestDate);
+                    return UpcomingHarvestDTO.builder()
+                            .lotId(lot.getId())
+                            .lotName(lot.getName())
+                            .estimatedHarvestDate(harvestDate.toString())
+                            .daysRemaining(daysRemaining)
+                            .build();
+                })
+                .sorted(Comparator.comparingLong(UpcomingHarvestDTO::getDaysRemaining))
+                .limit(10)
+                .toList();
     }
 
 }
