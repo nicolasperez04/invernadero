@@ -55,7 +55,7 @@ public class IrrigationService {
 
         log.info("Ejecutando scheduler: riego automático...");
         List<Lot> lots = lotRepository.findByStatus(LotStatus.IN_PRODUCTION);
-        EventType riegoType = eventTypeRepository.findByName("RIEGO").orElse(null);
+        EventType riegoType = eventTypeRepository.findByName("IRRIGATION").orElse(null);
         if (riegoType == null) {
             log.warn("No se encontró tipo de evento RIEGO — abortando riego automático");
             return;
